@@ -25,7 +25,7 @@ class Product(models.Model):
         "Category", related_name="productcategory", on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 
 class Review(models.Model):
