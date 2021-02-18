@@ -1,8 +1,8 @@
 from django.db import models
-from Partners.models import Supplier
-from Partners.models import Brand
+from Partners.models import Supplier, Brand, Customer
 from django.contrib.auth.models import User
-from Partners.models import Customer
+
+
 # Create your models here.
 
 
@@ -22,15 +22,19 @@ class Product(models.Model):
     supplier = models.ForeignKey(
         Supplier, on_delete=models.SET_NULL, null=True, blank=True, related_name="productsupplier")
     category = models.ForeignKey(
-        "Category", related_name="productcategory", on_delete=models.SET_NULL, null=True, blank=True)
+        Category, related_name="productcategory", on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
+
+    @property
+    def productcategory(self):
+        return self.category.name
 
 
 class Review(models.Model):
-    product = models.ForeignKey(
-        Product, related_name="productreviews", on_delete=models.CASCADE)
+    OrderItem = models.ForeignKey(
+        "Order.OrderItem", related_name="orderReviews", on_delete=models.CASCADE, null=True)
     customer = models.ForeignKey(
         Customer, related_name="customereviews", on_delete=models.SET_NULL, null=True)
     description = models.TextField(null=True, blank=True)

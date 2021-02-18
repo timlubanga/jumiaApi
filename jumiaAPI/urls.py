@@ -18,13 +18,15 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.conf import settings
 from AccountAuth import urls as accounturls
-from Product.urls import productUrls
+from Product.urls import productUrls, categoryUrls, reviewpatterns
 from Order import urls as orderitemurls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include(accounturls)),
     path('products/', include(productUrls)),
-    path('order/', include(orderitemurls))
+    path('categories/', include(categoryUrls)),
+    path('order/', include(orderitemurls)),
+    path('reviews/', include(reviewpatterns))
 ]
 
 
