@@ -1,6 +1,6 @@
 from django.db import models
-from Product.models import Product
 from Partners.models import Customer
+from Product.models import Product
 
 # Create your models here.
 
