@@ -9,26 +9,33 @@ class categorySerializer(serializers.ModelSerializer):
         fields = ["id", "name"]
 
 
-class productSerializer(serializers.ModelSerializer):
-    class Meta:
-        productcategory = serializers.ReadOnlyField()
-        model = Product
-        fields = ["id", "price", "name", "brand",
-                  "supplier", "image", "productcategory"]
+
 
 
 class reviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ["title", "description", "rating", "customer", "OrderItem"]
+        fields = ["title", "description", "rating",
+                  "customer", "product"]
+        read_only_fields = ["customer", "product"]
 
     def validate(self, data):
-        item = self.context.get("item", None)
+        product = self.context.get("product", None)
         customer = self.context.get("customer", None)
         review = Review.objects.filter(
-            OrderItem=item, customer=customer).exists()
+            product=product, customer=customer).exists()
         if review:
             raise serializers.ValidationError({"message":
-                "you have already reviewed this item"})
+                                               "you have already reviewed this item"})
         return data
+
+
+class productSerializer(serializers.ModelSerializer):
+    productreviews=reviewSerializer(read_only=True, many=True)
+    averageRating=serializers.ReadOnlyField()
+    class Meta:
+        productcategory = serializers.ReadOnlyField()
+        model = Product
+        fields = ["id", "price", "name", "brand",
+                  "supplier", "image", "productcategory", "productreviews", "averageRating"]

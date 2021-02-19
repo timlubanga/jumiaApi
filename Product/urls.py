@@ -7,7 +7,7 @@ routertwo = DefaultRouter()
 router.register("", productViewSet, basename='products')
 routertwo.register("", categoryViewSet, basename='categories')
 
-reviewpatterns = [path("orderitem/<int:orderitemId>/",
+reviewpatterns = [path("productitem/<int:orderitemId>/",
                        orderitemreviewReview.as_view(), name="reviews")]
 productUrls = router.urls
 categoryUrls = routertwo.urls
