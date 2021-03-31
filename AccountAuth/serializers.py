@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from Partners.models import Customer
 from Partners.serializers import CustomerSerializer
 
+
 class UserRegistration(serializers.ModelSerializer):
     password2 = serializers.CharField(
         style={'input_type': 'password'}, write_only=True)
@@ -11,7 +12,7 @@ class UserRegistration(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["username", "password", "email"
+        fields = ["username", "password", "email",
                   "password2", "profile_pic", "name"]
         extra_kwargs = {'password': {'write_only': True}}
 
