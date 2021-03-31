@@ -35,10 +35,12 @@ class orderitemreviewReview(APIView):
         orderitemId = kwargs.get("orderitemId", None)
         if orderitemId is not None:
             orderitem = get_object_or_404(OrderItem, id=orderitemId)
+            product = orderitem.product
+
             serializer = reviewSerializer(data=request.data, context={
-                                          "customer": request.user.customer, "item": orderitem})
+                                          "customer": request.user.customer, "product": product})
             serializer.is_valid(raise_exception=True)
             serializer.save(customer=request.user.customer,
-                            OrderItem=orderitem)
+                            product=product)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response({"message": "please provide orderitemId"}, status=status.HTTP_400_BAD_REQUEST)

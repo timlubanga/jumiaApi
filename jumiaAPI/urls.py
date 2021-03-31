@@ -20,13 +20,18 @@ from django.conf import settings
 from AccountAuth import urls as accounturls
 from Product.urls import productUrls, categoryUrls, reviewpatterns
 from Order import urls as orderitemurls
+from ContactInfo.urls import contactUrls
+from Partners.urls import brandUrls, supplierUrls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include(accounturls)),
     path('products/', include(productUrls)),
     path('categories/', include(categoryUrls)),
     path('order/', include(orderitemurls)),
-    path('reviews/', include(reviewpatterns))
+    path('contacts/', include(contactUrls)),
+    path('reviews/', include(reviewpatterns)),
+    path('suppliers/', include(supplierUrls)),
+    path('brands/', include(brandUrls))
 ]
 
 

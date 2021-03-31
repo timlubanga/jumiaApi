@@ -34,7 +34,6 @@ class OrderItem(models.Model):
     order = models.ForeignKey(
         Order, related_name="itemorder", on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=0)
-    rating = models.PositiveIntegerField(default=0, null=True, blank=True)
     product = models.ForeignKey(
         Product, related_name="productorderitem", on_delete=models.SET_NULL, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)

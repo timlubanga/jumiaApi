@@ -31,10 +31,22 @@ class Product(models.Model):
     def productcategory(self):
         return self.category.name
 
+    @property
+    def averageRating(self):
+        reviews = self.productreviews.all()
+        count = self.productreviews.all().count()
+        sum = 0
+        average=0
+        for review in reviews:
+            sum = sum+int(review.rating)
+        if count:
+            average = sum/count
+        return average
+
 
 class Review(models.Model):
-    OrderItem = models.ForeignKey(
-        "Order.OrderItem", related_name="orderReviews", on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(
+        Product, related_name="productreviews", on_delete=models.CASCADE, null=True)
     customer = models.ForeignKey(
         Customer, related_name="customereviews", on_delete=models.SET_NULL, null=True)
     description = models.TextField(null=True, blank=True)

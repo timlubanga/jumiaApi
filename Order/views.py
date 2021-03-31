@@ -25,9 +25,10 @@ class AddandEditOrderbyProductIdView(APIView):
         if productId:
             product = get_object_or_404(Product, id=productId)
             orderitem = OrderItem.objects.filter(
-                product__id=productId).exists()
+                product__id=productId, order=order).exists()
             if orderitem:
-                orderitem = OrderItem.objects.get(product__id=productId)
+                orderitem = OrderItem.objects.get(
+                    product__id=productId, order=order)
                 action = self.kwargs.get("action", None)
                 quantity = orderitem.quantity
                 if action == "add":
