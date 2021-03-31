@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import CreateAPIView
 from AccountAuth.serializers import UserRegistration
 from django.contrib.auth.models import User
 from rest_framework.response import Response
@@ -12,7 +12,7 @@ from django.contrib.auth import logout
 # Create your views here.
 
 
-class UserRegistrationView(ListCreateAPIView):
+class UserRegistrationView(CreateAPIView):
     serializer_class = UserRegistration
     permission_classes = (AllowAny, )
     queryset = User.objects.all()
