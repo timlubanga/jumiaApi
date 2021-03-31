@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'Partners.apps.PartnersConfig',
     'Product.apps.ProductConfig',
     'ContactInfo.apps.ContactinfoConfig',
-    'AccountAuth.apps.AccountConfig'
+    'AccountAuth.apps.AccountConfig',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -101,7 +102,15 @@ REST_FRAMEWORK = {
 
 
 }
-
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -143,3 +152,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 MEDIA_URL = '/images/'
 # specify the dir where uploaded files will be uploaded
 MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+
+if 'HEROKU' in os.environ:
+    import django_heroku
+    django_heroku.settings(locals())
