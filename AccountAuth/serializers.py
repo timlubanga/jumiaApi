@@ -17,7 +17,7 @@ class UserRegistration(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
     def save(self):
-        profile = self.validated_data['profile_pic']
+        profile = self.validated_data.get('profile_pic', None)
         name = self.validated_data['name']
         user = User(
             email=self.validated_data['email'],
@@ -25,7 +25,10 @@ class UserRegistration(serializers.ModelSerializer):
         )
         user.set_password(self.validated_data['password'])
         user.save()
-        Customer.objects.create(**self.validated_data)
+        if profile is not None:
+            Customer.objects.create(user=user, profile_pic=profile, name=name)
+        else:
+            Customer.objects.create(user=user, name=name)
 
         return user
 
