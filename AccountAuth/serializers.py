@@ -25,7 +25,7 @@ class UserRegistration(serializers.ModelSerializer):
         )
         user.set_password(self.validated_data['password'])
         user.save()
-        Customer.objects.create(user=user, profile_pic=profile, name=name)
+        Customer.objects.create(**self.validated_data)
 
         return user
 
