@@ -7,7 +7,7 @@ from Partners.serializers import CustomerSerializer
 class UserRegistration(serializers.ModelSerializer):
     password2 = serializers.CharField(
         style={'input_type': 'password'}, write_only=True)
-    profile_pic = serializers.ImageField(allow_null=True, write_only=True)
+    profile_pic = serializers.ImageField(allow_null=True)
     name = serializers.CharField(write_only=True)
 
     class Meta:
@@ -25,7 +25,7 @@ class UserRegistration(serializers.ModelSerializer):
         )
         user.set_password(self.validated_data['password'])
         user.save()
-        if profile is not None:
+        if profile:
             Customer.objects.create(user=user, profile_pic=profile, name=name)
         else:
             Customer.objects.create(user=user, name=name)
