@@ -7,7 +7,7 @@ from Partners.serializers import CustomerSerializer
 class UserRegistration(serializers.ModelSerializer):
     password2 = serializers.CharField(
         style={'input_type': 'password'}, write_only=True)
-    profile_pic = serializers.ImageField(allow_null=True)
+    # profile_pic = serializers.ImageField(allow_null=True)
     name = serializers.CharField(write_only=True)
 
     class Meta:
